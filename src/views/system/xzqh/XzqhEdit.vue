@@ -9,7 +9,7 @@
     :visible="dictEditVisiable"
     style="height: calc(100% - 55px);overflow: auto;padding-bottom: 53px;">
     <a-form :form="form">
-      <a-form-item label='行政区名称' v-bind="formItemLayout">
+      <a-form-item label='街道名称' v-bind="formItemLayout">
         <!-- <a-input v-model="dept.region" 
                  v-decorator="['region',
                    {rules: [
@@ -44,7 +44,7 @@
       :data="data5"
       :props="defaultProps"
       show-checkbox
-      :node-key="id"
+      node-key="amdId"
       :default-expand-all="true"
       :check-strictly="true"
        @check-change="getChecked"
@@ -91,10 +91,11 @@ export default {
       deptTreeKeys: +new Date(),
       data5:[],
       checkedId:null,
-       defaultProps: {
+      defaultProps: {
           children: 'children',
           label: 'region'
-        }
+      },
+      chexkdata:''
     }
   },
   methods: {
@@ -191,12 +192,18 @@ export default {
     dictEditVisiable () {
       if (this.dictEditVisiable) {
         this.$get('adm/findTree').then((r) => {
-          // console.log(r);
+          console.log(r);
           this.data5 = r.data
-          this.id=r.data[0].amdId
-          console.log(this.name);
+          // this.id=r.data[0].pid
+          // console.log(this.name);
           this.dept=this.name;
+          // this.id=this.dept.pid
           console.log(this.dept);
+          let arr=[];
+          arr.push(this.dept.pid)
+          // this.chexkdata.push(r.data.pid);
+          // this.chexkdata=r.data.pid
+          this.$refs.tree2.setCheckedKeys(arr);
         })
       }
     }

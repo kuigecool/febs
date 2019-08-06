@@ -9,7 +9,7 @@
     :visible="dictAddVisiable"
     style="height: calc(100% - 55px);overflow: auto;padding-bottom: 53px;">
     <a-form :form="form">
-      <a-form-item label='行政区名称' v-bind="formItemLayout">
+      <a-form-item label='街道名称' v-bind="formItemLayout">
         <a-input v-model="dept.region"
                  v-decorator="['region',
                    {rules: [

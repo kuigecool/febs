@@ -4,7 +4,7 @@
       <div class="operator" style="width:1100px;float:right;">
         <a-button v-hasPermission="'dict:add'" type="primary" ghost @click="add">新增</a-button>
         <a-button v-hasPermission="'dict:delete'" @click="batchDelete">删除</a-button>
-        <a-dropdown v-hasPermission="'dict:export'">
+        <!-- <a-dropdown v-hasPermission="'dict:export'">
           <a-menu slot="overlay">
             <a-menu-item key="export-data" @click="exportExcel">导出Excel</a-menu-item>
           </a-menu>
@@ -12,7 +12,7 @@
             更多操作
             <a-icon type="down" />
           </a-button>
-        </a-dropdown>
+        </a-dropdown> -->
       </div>
       <div style="width:400px;float:left;height:645px;background:#eee;">
         <el-tree
@@ -34,7 +34,6 @@
         :pagination="pagination"
         :loading="loading"
         :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
-        @change="handleTableChange"
         style="width:1100px;float:right;"
       >
         <template slot="remark" slot-scope="text, record">
@@ -84,6 +83,7 @@ export default {
   components: { XzqhAdd, XzqhEdit },
   data() {
     return {
+      searchId:'',
       editmes:'',
       advanced: false,
       dataSource: [],
@@ -121,7 +121,7 @@ export default {
     columns() {
       return [
         {
-          title: "所辖行政区",
+          title: "街道名称",
           dataIndex: "region"
         },
         {
@@ -143,7 +143,7 @@ export default {
     }
   },
   mounted() {
-    this.fetch();
+    // this.fetch();
     this.$get('adm/findTree').then(res=>{
         console.log(res);
         this.data=res.data;
@@ -151,13 +151,13 @@ export default {
   },
   methods: {
          coback(data3, checked, node){
-          console.log(data3);
-          let id=data3.amdId;
-          this.$get('adm/findByPid',{pid:id}).then(r=>{
-            console.log(r);
-            this.data2=r.data;
-          })
-           
+          // console.log(data3);
+          this.searchId=data3.amdId;
+          // this.$get('adm/findByPid',{pid:this.searchId}).then(r=>{
+          //   // console.log(r);
+          //   this.data2=r.data;
+          // })
+           this.search();
       },
        filterNode(value, data) {
         if (!value) return true;
@@ -166,6 +166,7 @@ export default {
     onSelectChange(selectedRowKeys) {
       this.selectedRowKeys = selectedRowKeys;
       console.log(selectedRowKeys);
+      
     },
     toggleAdvanced() {
       this.advanced = !this.advanced;
@@ -195,9 +196,9 @@ export default {
     edit(record) {
       // this.$refs.dictEdit.setFormValues(record);
       this.dictEditVisiable = true;
-      console.log(record);
+      // console.log(record);
       this.editmes=record;
-      console.log(this.editmes)
+      // console.log(this.editmes)
 
     },
     batchDelete() {
@@ -205,36 +206,59 @@ export default {
         this.$message.warning("请选择需要删除的记录");
         return;
       }
-      let that = this;
-      this.$confirm({
-        title: "确定删除所选中的记录?",
-        content: "当您点击确定按钮后，这些记录将会被彻底删除",
-        centered: true,
-        onOk() {
-          let dictIds = [];
-          for (let key of that.selectedRowKeys) {
-            dictIds.push(that.data2[key].region);
+      // let that = this;
+      // this.$confirm({
+      //   title: "确定删除所选中的记录?",
+      //   content: "当您点击确定按钮后，这些记录将会被彻底删除",
+      //   centered: true,
+      //   onOk() {
+      //     let dictIds = [];
+      //     for (let key of that.selectedRowKeys) {
+      //       dictIds.push(that.data2[key].region);
+      //     }
+      //     console.log(dictIds[0]);
+      //     that.$post("adm/del",{amdId:dictIds[0]}).then(() => {
+      //       that.$message.success("删除成功");
+      //       that.selectedRowKeys = [];
+      //       that.search();
+      //     });
+      //   },
+      //   onCancel() {
+      //     that.selectedRowKeys = [];
+      //   }
+      // });
+      let dictIds = [];
+          for (let key of this.selectedRowKeys) {
+            dictIds.push(this.data2[key].amdId);
           }
-          that.$post("adm/del",{amdId:dictIds[0]}).then(() => {
-            that.$message.success("删除成功");
-            that.selectedRowKeys = [];
-            that.search();
+          console.log(dictIds[0]);
+          this.$post("adm/del",{amdId:dictIds[0]}).then(() => {
+            this.$message.success("删除成功");
+            this.selectedRowKeys = [];
+            this.search();
+            
           });
-        },
-        onCancel() {
-          that.selectedRowKeys = [];
-        }
-      });
+         
     },
     exportExcel() {
       this.$export("dict/excel", {
         ...this.queryParams
       });
+      
     },
     search() {
-      this.fetch({
-        ...this.queryParams
-      });
+      // this.fetch({
+      //   ...this.queryParams
+      // });
+      this.$get('adm/findByPid',{pid:this.searchId}).then(r=>{
+            console.log(r);
+            this.data2=r.data;
+            const pagination = { ...this.pagination };
+            pagination.total = r.data.length;
+            this.loading = false;
+            // this.dataSource = r.data.rows;
+            this.pagination = pagination;
+      })
     },
     reset() {
       // 取消选中
@@ -248,39 +272,40 @@ export default {
       this.paginationInfo = null;
       // 重置查询参数
       this.queryParams = {};
-      this.fetch();
+      // this.fetch();
     },
-    handleTableChange(pagination, filters, sorter) {
-      this.paginationInfo = pagination;
-      this.fetch({
-        ...this.queryParams
-      });
-    },
-    fetch(params = {}) {
-      this.loading = true;
-      if (this.paginationInfo) {
-        // 如果分页信息不为空，则设置表格当前第几页，每页条数，并设置查询分页参数
-        this.$refs.TableInfo.pagination.current = this.paginationInfo.current;
-        this.$refs.TableInfo.pagination.pageSize = this.paginationInfo.pageSize;
-        params.pageSize = this.paginationInfo.pageSize;
-        params.pageNum = this.paginationInfo.current;
-      } else {
-        // 如果分页信息为空，则设置为默认值
-        params.pageSize = this.pagination.defaultPageSize;
-        params.pageNum = this.pagination.defaultCurrent;
-      }
-      this.$get("dict", {
-        ...params
-      }).then(r => {
-        let data = r.data;
-        console.log(data);
-        const pagination = { ...this.pagination };
-        pagination.total = data.total;
-        this.loading = false;
-        this.dataSource = data.rows;
-        this.pagination = pagination;
-      });
-    }
+    // handleTableChange(pagination, filters, sorter) {
+    //   this.paginationInfo = pagination;
+    //   console.log(pagination);
+    //   this.fetch({
+    //     ...this.queryParams
+    //   });
+    // },
+    // fetch(params = {}) {
+    //   this.loading = true;
+    //   if (this.paginationInfo) {
+    //     // 如果分页信息不为空，则设置表格当前第几页，每页条数，并设置查询分页参数
+    //     this.$refs.TableInfo.pagination.current = this.paginationInfo.current;
+    //     this.$refs.TableInfo.pagination.pageSize = this.paginationInfo.pageSize;
+    //     params.pageSize = this.paginationInfo.pageSize;
+    //     params.pageNum = this.paginationInfo.current;
+    //   } else {
+    //     // 如果分页信息为空，则设置为默认值
+    //     params.pageSize = this.pagination.defaultPageSize;
+    //     params.pageNum = this.pagination.defaultCurrent;
+    //   }
+    //   this.$get("dict", {
+    //     ...params
+    //   }).then(r => {
+    //     let data = r.data;
+    //     console.log(data);
+    //     const pagination = { ...this.pagination };
+    //     pagination.total = data.total;
+    //     this.loading = false;
+    //     this.dataSource = data.rows;
+    //     this.pagination = pagination;
+    //   });
+    // }
   }
 };
 </script>
