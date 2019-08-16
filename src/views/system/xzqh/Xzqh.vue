@@ -1,7 +1,7 @@
 <template>
-  <a-card :bordered="false" class="card-area">
+  <a-card :bordered="false" class="card-area" style="height:100%">
     <div>
-      <div class="operator" style="width:1100px;float:right;">
+      <div class="operator" style="width:75%;float:right;">
         <a-button v-hasPermission="'dict:add'" type="primary" ghost @click="add">新增</a-button>
         <a-button v-hasPermission="'dict:delete'" @click="batchDelete">删除</a-button>
         <!-- <a-dropdown v-hasPermission="'dict:export'">
@@ -14,7 +14,7 @@
           </a-button>
         </a-dropdown> -->
       </div>
-      <div style="width:400px;float:left;height:645px;background:#eee;">
+      <div style="width:22%;float:left;height:645px;background:#eee;">
         <el-tree
           class="filter-tree"
           :data="data"
@@ -34,7 +34,7 @@
         :pagination="pagination"
         :loading="loading"
         :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
-        style="width:1100px;float:right;"
+        style="width:75%;float:right;"
       >
         <template slot="remark" slot-scope="text, record">
           <a-popover placement="topLeft">
