@@ -67,7 +67,7 @@
         <el-row :gutter="20">
           <el-col :span="12">
             <div class="grid-content bg-purple">
-              &nbsp;&nbsp;企业名称:
+              &nbsp;&nbsp;<b style="color:red">*</b>企业名称:
               <el-select
                 filterable
                 placeholder="请选择"
@@ -118,13 +118,13 @@
         <el-row :gutter="20">
           <el-col :span="12">
             <div class="grid-content bg-purple">
-              &nbsp;&nbsp;提问人姓名:
+              &nbsp;&nbsp;<b style="color:red">*</b>提问人姓名:
               <el-input placeholder="请输入内容" name="propose" v-model="bjlv.twxingming"></el-input>
             </div>
           </el-col>
           <el-col :span="12">
             <div class="grid-content bg-purple">
-              &nbsp;&nbsp;联系号码:
+              &nbsp;&nbsp;<b style="color:red">*</b>联系号码:
               <el-input
                 placeholder="请输入内容"
                 name="tel"
@@ -139,7 +139,7 @@
         <el-row :gutter="20">
           <el-col :span="12">
             <div class="grid-content bg-purple">
-              &nbsp;&nbsp;问题标题:
+              &nbsp;&nbsp;<b style="color:red">*</b>问题标题:
               <el-input placeholder="请输入内容" name="title" v-model="bjlv.qybiaoti"></el-input>
             </div>
           </el-col>
@@ -156,7 +156,7 @@
             </el-select>
             </div>-->
             <div class="grid-content bg-purple" style="position:relative">
-              &nbsp;&nbsp;事件类型:
+              &nbsp;&nbsp;<b style="color:red">*</b>事件类型:
               <el-input
                 placeholder="请输入内容"
                 :disabled="true"
@@ -203,7 +203,7 @@
         <el-row :gutter="20">
           <el-col :span="12">
             <div class="grid-content bg-purple" style="position:relative">
-              &nbsp;&nbsp;主责部门:
+              &nbsp;&nbsp;<b style="color:red">*</b>主责部门:
               <el-input
                 placeholder="请输入内容"
                 :disabled="true"
@@ -295,6 +295,29 @@
         </el-row>
       </el-form>
     </el-dialog>
+    <!-- 表格区域 -->
+    <!-- :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}" -->
+     <!-- :pagination="pagination" -->
+      <a-table ref="TableInfo"
+               :columns="columns"
+               :dataSource="data5"
+              
+               
+               
+               :scroll="{ x: 900 }">
+        <template slot="remark" slot-scope="text, record">
+          <a-popover placement="topLeft">
+            <template slot="content">
+              <div style="max-width: 200px">{{text}}</div>
+            </template>
+            <p style="width: 200px;margin-bottom: 0">{{text}}</p>
+          </a-popover>
+        </template>
+        <template slot="operation" slot-scope="text, record">
+          <a-icon v-hasPermission="'dict:update'" type="setting" theme="twoTone" twoToneColor="#4a9ff5"  title="修改字典"></a-icon>
+          <a-badge v-hasNoPermission="'dict:update'" status="warning" text="无权限"></a-badge>
+        </template>
+      </a-table>
   </div>
 </template>
 <script>
@@ -302,6 +325,25 @@ import addcase from "./addcase";
 import ztree from "../../../common/ztree.vue";
 import ztreecase from "../../../common/ztreecase.vue";
 import db from "utils/localstorage";
+const CzBJLV={
+        qymingcheng: "",
+        qymingchengid:"",
+        qyleixing: "",
+        qyleixings: "",
+        qyzhengxing: "",
+        qydizhi: "",
+        twxingming: "",
+        qymobile: "",
+        qybiaoti: "",
+        sqleixing: "",
+        sqleixingid: "",
+        qymiaoshu: "",
+        qybumen: "",
+        qybumenid: "",
+        cntime: "",
+        Uuid: ""
+
+}
 export default {
   // components: { addcase },
   components: {
@@ -320,6 +362,7 @@ export default {
       }
     }
   },
+  
   data() {
     return {
       headers: {
@@ -344,6 +387,7 @@ export default {
         options2: [],
         value2: ""
       },
+      data5:[],
       bjlv: {
         qymingcheng: "",
         qymingchengid:"",
@@ -368,13 +412,46 @@ export default {
       fileId: ""
     };
   },
+  computed: {
+    columns() {
+      return [
+        {
+          title: "企业名称",
+          dataIndex: "corpName"
+        },
+        {
+          title: "部门",
+          dataIndex: "deptNames"
+        },
+        {
+          title: "创建时间",
+          dataIndex: "createTime"
+        },
+        {
+          title: "操作",
+          dataIndex: "operation",
+          scopedSlots: { customRender: "operation" },
+          fixed: "right",
+          width: 100
+        }
+      ];
+    }
+  },
   mounted() {
     this.getQymc();
+    this.getbjlv();
 
     // this.qyleixing();
     // this.searchbm();
   },
   methods: {
+    //获取办件数据列表
+    getbjlv(){
+      this.$get('item/findByPage').then(r=>{
+        this.data5=r.data.records
+        console.log(r);
+      })
+    },
     // 上传成功后返回
     fileSuccess(response, file, fileList){
       console.log(response);
@@ -400,7 +477,7 @@ export default {
     // 获取办件录入的id
     getUuid() {
       this.$get("util/getUuid").then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         this.bjlv.Uuid = res.data.UUID;
       });
     },
@@ -427,6 +504,7 @@ export default {
     },
     add() {
       this.outerVisible = true;
+      this.bjlv=Object.assign({},CzBJLV)
       this.getUuid();
     },
     // 接收树形组件部门数据的值
@@ -438,7 +516,7 @@ export default {
           return item.label;
         }
       });
-      this.bjlv.qybumen=this.bjlv.qybumen.split(',')
+      // this.bjlv.qybumen=this.bjlv.qybumen.split(',')
       console.log(this.bjlv.qybumen)
       this.bjlv.qybumenid = arrone.map(item => {
         // return item.id
@@ -481,10 +559,38 @@ export default {
       this.qyleixing1 = qyxx.type;
       this.bjlv.qyzhengxing = qyxx.creaditcode;
       this.bjlv.qydizhi = qyxx.addr;
+      this.bjlv.qymingchengid=qyxx.corpId;
+      console.log(this.bjlv.qymingchengid);
+      console.log(this.bjlv.Uuid,)
+      console.log(this.bjlv.qybumenid)
+      console.log(this.bjlv.sqleixingid)
       console.log(qyxx)
     },
     
     fromsubmit() {
+      if(!this.bjlv.qymingchengid){
+        this.$message.error('请选择企业');
+        return;
+      }else if(!this.bjlv.twxingming){
+        this.$message.error('请输入姓名');
+        return;
+      }
+      else if(!this.bjlv.qymobile){
+        this.$message.error('请输入联系电话');
+        return;
+      }else if(!this.bjlv.qybiaoti){
+        this.$message.error('请输入标题');
+        return;
+      }
+      else if(!this.bjlv.sqleixingid){
+        this.$message.error('请选择事件类型');
+        return;
+      }
+      else if(!this.bjlv.qybumenid){
+        this.$message.error('请选择部门');
+        return;
+      }
+      
       this.$post('item/handAdd',{
         
           itemId:this.bjlv.Uuid,
@@ -498,6 +604,8 @@ export default {
         
       })
       .then(res=>{
+        this.$message.success('办件录入成功')
+        this.outerVisible = false;
         console.log(res)
       })
 

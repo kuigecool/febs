@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Febs from './FEBS'
+import App from './App'
 import router from './router'
 import Antd from 'ant-design-vue'
 import ElementUI from 'element-ui'
@@ -38,7 +38,8 @@ Vue.prototype.$upload = request.upload
 
 /* eslint-disable no-new */
 new Vue({
+  el: '#app',
   router,
   store,
-  render: h => h(Febs)
-}).$mount('#febs')
+  render: h => h(App)
+})

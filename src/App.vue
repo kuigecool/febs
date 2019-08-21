@@ -1,6 +1,6 @@
 <template>
   <a-locale-provider :locale="chinese">
-    <div id="febs">
+    <div id="app">
       <router-view/>
     </div>
   </a-locale-provider>
@@ -12,7 +12,7 @@ import chinese from 'ant-design-vue/lib/locale-provider/zh_CN'
 import 'moment/locale/zh-cn'
 
 export default {
-  name: 'Febs',
+  name: 'app',
   data () {
     return {
       chinese

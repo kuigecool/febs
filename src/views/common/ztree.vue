@@ -8,7 +8,7 @@
       :data="data2"
       :props="defaultProps"
       show-checkbox
-      :node-key="id"
+      node-key="id"
       :filter-node-method="filterNode"
        @check-change="getChecked"
       ref="tree2"
