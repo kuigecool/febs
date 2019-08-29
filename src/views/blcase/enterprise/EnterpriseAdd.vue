@@ -292,7 +292,7 @@
                <el-select v-model="Enterprise.cadereId" clearable filterable placeholder="请选择" style="width: 75%;margin-left: -4px;">
                   <el-option
                     v-for="item in options4"
-                    :key="item.phone"
+                    :key="item.id"
                     :label="item.userNamePhone"
                     :value="item.userName">
                   </el-option>
@@ -353,7 +353,7 @@
                <el-select v-model="Enterprise.waiterId" filterable clearable placeholder="请选择" style="width: 75%;margin-left: -4px;">
                   <el-option
                     v-for="item in options3"
-                    :key="item.phone"
+                    :key="item.id"
                     :label="item.userNamePhone"
                     :value="item.userName">
                   </el-option>
