@@ -62,7 +62,7 @@
                 :show-all-levels="false"
                 clearable
                 :props="props"
-                style="width: 91%;margin-left: -4px;"
+                style="width: 37%;margin-left: -4px;"
                 @change="getdeptID"
                 v-model="user.deptId"
               ></el-cascader>
@@ -217,7 +217,7 @@ export default {
   border-radius: 0;
 }
 .bumen {
-  width: 100px;
+  width: 134px;
   height: 40px;
   line-height: 40px;
   background-color: #f5f7fa;
@@ -235,7 +235,7 @@ export default {
   margin-bottom: 2px;
 }
 .el-input-group__prepend {
-  width: 100px;
+  width: 134px;
 }
 .el-row {
   margin-bottom: 40px;
@@ -263,7 +263,7 @@ export default {
   padding: 10px 0;
   background-color: #f9fafc;
 }
-.el-select .el-input {
+/* .el-select .el-input {
   width: 300px;
-}
+} */
 </style>

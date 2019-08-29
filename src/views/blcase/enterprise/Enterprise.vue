@@ -67,6 +67,7 @@
       <a-table ref="TableInfo"
                :columns="columns"
                :dataSource="dataSource"
+               rowKey="id"
                :pagination="pagination"
                :loading="loading"
                :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
@@ -261,15 +262,15 @@ export default {
         params.pageSize = this.pagination.defaultPageSize
         params.pageNum = this.pagination.defaultCurrent
       }
-      this.$get('corpInfoController/findByPage', {
+      this.$get('corpInfo/findByPage', {
         ...params
       }).then((r) => {
-        let data = r.data
+        let data = r.data.data
         console.log(data)
         const pagination = { ...this.pagination }
         pagination.total = data.total
         this.loading = false
-        this.dataSource = data.records
+        this.dataSource = data.rows
         this.pagination = pagination
       })
     }

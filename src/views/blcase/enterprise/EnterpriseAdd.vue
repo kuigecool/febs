@@ -1,136 +1,7 @@
 <template>
 <div>
-  <!-- <a-drawer
-    title="新增企业"
-    :maskClosable="false"
-    width=650
-    placement="right"
-    :closable="false"
-    @close="onClose"
-    :visible="dictAddVisiable"
-    style="height: calc(100% - 55px);overflow: auto;padding-bottom: 53px;">
-    <a-form :form="form">
-      <a-form-item label='企业名称' v-bind="formItemLayout">
-        <a-input style="width: 100%"
-                 v-model="dict.corpName"
-                 v-decorator="['corpName',
-                   {rules: [
-                    { required: true, message: '不能为空'}
-                  ]}]"/>
-      </a-form-item>
-      <a-form-item label='统一征信代码' v-bind="formItemLayout">
-        <a-input v-model="dict.creaditCode"
-                 v-decorator="['creaditCode',
-                   {rules: [
-                    { required: true, message: '不能为空'},
-                    { max: 20, message: '长度不能超过20个字符'}
-                  ]}]"/>
-      </a-form-item>
-    
-      <a-form-item label='法人' v-bind="formItemLayout">
-        <a-input v-model="dict.legalPerson"
-                 v-decorator="['legalPerson',
-                   {rules: [
-                    { required: true, message: '不能为空'},
-                    { max: 20, message: '长度不能超过20个字符'}
-                  ]}]"/>
-      </a-form-item>
-      <a-form-item label='联系人' v-bind="formItemLayout">
-        <a-input v-model="dict.contact"
-                 v-decorator="['contact',
-                   {rules: [
-                    { required: true, message: '不能为空'},
-                    { max: 20, message: '长度不能超过20个字符'}
-                  ]}]"/>
-      </a-form-item>
-       <a-form-item label='联系人电话' v-bind="formItemLayout">
-        <a-input v-model="dict.contactPhone"
-                 v-decorator="['contactPhone',
-                   {rules: [
-                    { required: true, message: '不能为空'},
-                    { max: 20, message: '长度不能超过20个字符'}
-                  ]}]"/>
-      </a-form-item>
-       <a-form-item label='企业座机' v-bind="formItemLayout">
-        <a-input v-model="dict.corpTel"
-                 v-decorator="['corpTel',
-                   {rules: [
-                    { required: true, message: '不能为空'},
-                    { max: 20, message: '长度不能超过20个字符'}
-                  ]}]"/>
-      </a-form-item>
-       <a-form-item label='所属街道' v-bind="formItemLayout">
-        <a-input v-model="dict.fieldName"
-                 v-decorator="['fieldName',
-                   {rules: [
-                    { required: true, message: '不能为空'},
-                    { max: 20, message: '长度不能超过20个字符'}
-                  ]}]"/>
-      </a-form-item>
-       <a-form-item label='所属园区ID' v-bind="formItemLayout">
-        <a-input v-model="dict.street"
-                 v-decorator="['street',
-                   {rules: [
-                    { required: true, message: '不能为空'},
-                    { max: 20, message: '长度不能超过20个字符'}
-                  ]}]"/>
-      </a-form-item>
-        
-       <a-form-item label='服务专员ID' v-bind="formItemLayout">
-        <a-input v-model="dict.waiterId"
-                 v-decorator="['waiterId',
-                   {rules: [
-                    { required: true, message: '不能为空'},
-                    { max: 20, message: '长度不能超过20个字符'}
-                  ]}]"/>
-      </a-form-item>
-       <a-form-item label='结对干部ID' v-bind="formItemLayout">
-        <a-input v-model="dict.cadereId"
-                 v-decorator="['cadereId',
-                   {rules: [
-                    { required: true, message: '不能为空'},
-                    { max: 20, message: '长度不能超过20个字符'}
-                  ]}]"/>
-      </a-form-item>
-      <a-form-item label='数据来源' v-bind="formItemLayout">
-            <a-radio-group
-            v-model="dict.dataSource"
-            v-decorator="['dataSource',{rules: [{ required: true, message: '请选择来源'}]}]">
-            <a-radio value="0">区大数据</a-radio>
-            <a-radio value="1">市工商局</a-radio>
-            <a-radio value="2">网站录入</a-radio>
-            <a-radio value="3">移动端录入</a-radio>
-            <a-radio value="4">外部接口数据</a-radio>
-            </a-radio-group>
-        </a-form-item>
-        <a-form-item label='企业类型' v-bind="formItemLayout">
-            <a-radio-group
-            v-model="dict.corpType"
-            v-decorator="['corpType',{rules: [{ required: true, message: '请选择企业类型'}]}]">
-            <a-radio value="0">普通企业</a-radio>
-            <a-radio value="1">重点企业</a-radio>
-            <a-radio value="2">纳税大户</a-radio>
-            </a-radio-group>
-        </a-form-item>
-        <a-form-item label='审核状态' v-bind="formItemLayout">
-        <a-radio-group
-          v-model="dict.auditFalg"
-          v-decorator="['auditFalg',{rules: [{ required: true, message: '请选择状态'}]}]">
-          <a-radio value="0">未审核</a-radio>
-        </a-radio-group>
-      </a-form-item>
-
-    </a-form>
-    <div class="drawer-bootom-button">
-      <a-popconfirm title="确定放弃编辑？" @confirm="onClose" okText="确定" cancelText="取消">
-        <a-button style="margin-right: .8rem">取消</a-button>
-      </a-popconfirm>
-      <a-button @click="handleSubmit" type="primary" :loading="loading">提交</a-button>
-    </div>
-  </a-drawer> -->
   <el-dialog title="新增企业" :visible.sync="dictAddVisiable" width="60%" @close="onClose">
-      <el-form :inline="true" id="dict" :model="dict" class="demo-form-inline">
-        <!-- 标题1 -->
+      <!-- <el-form :inline="true" id="dict" :model="dict" class="demo-form-inline">
         <el-row :gutter="20">
           <el-col :span="24">
             <div class="grid-content bg-purple" style="text-align:center;line-height:260%;">
@@ -138,7 +9,7 @@
             </div>
           </el-col>
         </el-row>
-        <!-- 第一行 -->
+        
         <el-row :gutter="20">
           <el-col :span="12">
             <div class="grid-content bg-purple">
@@ -153,7 +24,7 @@
             </div>
           </el-col>
         </el-row>
-        <!-- 第二行 -->
+       
         <el-row :gutter="20">
           <el-col :span="12">
             <div class="grid-content bg-purple">
@@ -168,7 +39,7 @@
             </div>
           </el-col>
         </el-row>
-        <!-- 第三行 -->
+        
         <el-row :gutter="20">
           <el-col :span="12">
             <div class="grid-content bg-purple">
@@ -189,12 +60,12 @@
             </div>
           </el-col>
         </el-row>
-        <!-- 第四行 -->
+       
         <el-row :gutter="20">
           <el-col :span="12">
             <div class="grid-content bg-purple">
               &nbsp;&nbsp;<b style="color:red">*</b>所属街道:
-              <!-- <el-select
+              <el-select
                 filterable
                 placeholder="请选择"
                 @change="jdeshuju"
@@ -208,7 +79,7 @@
                   :label="item.name"
                   :value="item.corpId"
                 ></el-option>
-              </el-select> -->
+              </el-select>
               <el-input
                 type="text"
                 :disabled="true"
@@ -221,7 +92,7 @@
           <el-col :span="12">
             <div class="grid-content bg-purple">
               &nbsp;&nbsp;<b style="color:red">*</b>所属园区:
-              <!-- <el-select
+              <el-select
                 filterable
                 placeholder="请选择"
                 @change="yqshuju"
@@ -235,7 +106,7 @@
                   :label="item.name"
                   :value="item.corpId"
                 ></el-option>
-              </el-select> -->
+              </el-select>
               <el-input
                 type="text"
                 :disabled="true"
@@ -246,12 +117,12 @@
             </div>
           </el-col>
         </el-row>
-        <!-- 第五行 -->
+        
         <el-row :gutter="20">
            <el-col :span="12">
             <div class="grid-content bg-purple">
               &nbsp;&nbsp;<b style="color:red">*</b>服务专员:
-              <!-- <el-select
+              <el-select
                 filterable
                 placeholder="请选择"
                 @change="fwzyshuju"
@@ -265,7 +136,7 @@
                   :label="item.name"
                   :value="item.corpId"
                 ></el-option>
-              </el-select> -->
+              </el-select>
               <el-input
                 type="text"
                 :disabled="true"
@@ -278,7 +149,7 @@
           <el-col :span="12">
             <div class="grid-content bg-purple">
               &nbsp;&nbsp;<b style="color:red">*</b>结对干部:
-              <!-- <el-select
+              <el-select
                 filterable
                 placeholder="请选择"
                 @change="jdgbshuju"
@@ -292,7 +163,7 @@
                   :label="item.name"
                   :value="item.corpId"
                 ></el-option>
-              </el-select> -->
+              </el-select>
               <el-input
                 type="text"
                 :disabled="true"
@@ -315,6 +186,257 @@
             </div>
           </el-col>
         </el-row>
+        <el-row :gutter="20">
+          <el-col :span="24">
+            <div class="grid-content">
+              <el-button
+                type="primary"
+                style="margin-left:50%;transform: translateX(-50%);"
+                @click="fromsubmit"
+              >提交</el-button>
+            </div>
+          </el-col>
+        </el-row>
+      </el-form> -->
+      <el-form :inline="true" id="Enterprise" :model="Enterprise" class="demo-form-inline" label-width="80px">
+        <!-- 标题1 -->
+        <el-row :gutter="20">
+          <el-col :span="24">
+            <div class="grid-content bg-purple" style="text-align:center;line-height:260%;">企业基本信息</div>
+          </el-col>
+        </el-row>
+        <!-- 第一行 -->
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <div>
+              <el-input placeholder="请输入内容" v-model="Enterprise.corpName">
+                <template slot="prepend" style="width:100px">
+                  <b style="color:red">*</b>企业名称:
+                </template>
+              </el-input>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div>
+              <el-input placeholder="请输入内容" v-model="Enterprise.creaditCode" name="tel" maxlength="11" oninput="value=value.replace(/[^\d]/g,'')">
+                <template slot="prepend" style="width:100px">
+                  <b style="color:red">*</b>统一征信代码:
+                </template>
+              </el-input>
+            </div>
+          </el-col>
+        </el-row>
+        <!-- 第二行 -->
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <div>
+              <el-input placeholder="请输入内容" v-model="Enterprise.address" name="tel" maxlength="18" oninput="value=value.replace(/^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/,'')">
+                <template slot="prepend">
+                  <b style="color:red">*</b>地址:
+                </template>
+              </el-input>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div>
+              <el-input placeholder="请输入内容" v-model="Enterprise.legalPerson">
+                <template slot="prepend">
+                  <b style="color:red">*</b>法人:
+                </template>
+              </el-input>
+            </div>
+          </el-col>
+        </el-row>
+        <!-- 第三行 -->
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <div>
+              <el-input placeholder="请输入内容" v-model="Enterprise.contact" name="tel" maxlength="18" oninput="value=value.replace(/^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/,'')">
+                <template slot="prepend">
+                  <b style="color:red">*</b>联系人:
+                </template>
+              </el-input>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div>
+              <el-input placeholder="请输入内容" v-model="Enterprise.contactPhone">
+                <template slot="prepend">
+                  <b style="color:red">*</b>联系人电话:
+                </template>
+              </el-input>
+            </div>
+          </el-col>
+        </el-row>
+        <!-- 第四行 -->
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <div>
+              <el-input placeholder="请输入内容" v-model="Enterprise.corpTel" name="tel" maxlength="18" oninput="value=value.replace(/^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/,'')">
+                <template slot="prepend">
+                  <b style="color:red">*</b>企业座机:
+                </template>
+              </el-input>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div>
+              <!-- <el-input placeholder="请输入内容" v-model="Enterprise.corpType">
+                <template slot="prepend">
+                  <b style="color:red">*</b>企业类型:
+                </template>
+              </el-input> -->
+               <span class="bumen1">
+                <b style="color:red">*</b>结对干部:
+              </span>
+               <el-select v-model="Enterprise.cadereId" clearable filterable placeholder="请选择" style="width: 75%;margin-left: -4px;">
+                  <el-option
+                    v-for="item in options4"
+                    :key="item.phone"
+                    :label="item.userNamePhone"
+                    :value="item.userName">
+                  </el-option>
+                </el-select>
+            </div>
+          </el-col>
+        </el-row>
+        <!-- 第五行 -->
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <div>
+              <span class="bumen1">
+                <b style="color:red">*</b>所属街道
+              </span>
+               <el-select v-model="Enterprise.street"  filterable clearable placeholder="请选择" style="width: 75%;margin-left: -4px;">
+                  <el-option
+                    v-for="item in options1"
+                    :key="item.amdId"
+                    :label="item.region"
+                    :value="item.village">
+                  </el-option>
+                </el-select>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div>
+              <!-- <el-input placeholder="请输入内容" v-model="Enterprise.zoneId">
+                <template slot="prepend">
+                  <b style="color:red">*</b>所属园区:
+                </template>
+              </el-input> -->
+              <span class="bumen1">
+                <b style="color:red">*</b>所属园区:
+              </span>
+               <el-select v-model="Enterprise.zoneId" filterable clearable placeholder="请选择" style="width: 75%;margin-left: -4px;">
+                  <el-option
+                    v-for="item in options2"
+                    :key="item.id"
+                    :label="item.zoneName"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
+            </div>
+          </el-col>
+        </el-row>
+        <!-- 第6行 -->
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <div>
+              <!-- <el-input placeholder="请输入内容" v-model="Enterprise.waiterId" name="tel" maxlength="18" oninput="value=value.replace(/^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/,'')">
+                <template slot="prepend">
+                  <b style="color:red">*</b>服务专员:
+                </template>
+              </el-input> -->
+              <span class="bumen1">
+                <b style="color:red">*</b>服务专员:
+              </span>
+               <el-select v-model="Enterprise.waiterId" filterable clearable placeholder="请选择" style="width: 75%;margin-left: -4px;">
+                  <el-option
+                    v-for="item in options3"
+                    :key="item.phone"
+                    :label="item.userNamePhone"
+                    :value="item.userName">
+                  </el-option>
+                </el-select>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div>
+              <!-- <el-input placeholder="请输入内容" v-model="Enterprise.cadereId">
+                <template slot="prepend">
+                  <b style="color:red">*</b>结对干部:
+                </template>
+              </el-input> -->
+              <!-- <span class="bumen1">
+                <b style="color:red">*</b>结对干部:
+              </span>
+               <el-select v-model="Enterprise.cadereId" clearable filterable placeholder="请选择" style="width: 75%;margin-left: -4px;">
+                  <el-option
+                    v-for="item in options4"
+                    :key="item.phone"
+                    :label="item.userNamePhone"
+                    :value="item.userName">
+                  </el-option>
+                </el-select> -->
+            </div>
+          </el-col>
+        </el-row>
+        <!-- 第7行 -->
+        <!-- 第8行 -->
+        <!-- <el-row :gutter="20">
+          <el-col :span="12">
+            <div>
+              <el-input placeholder="请输入内容" v-model="Enterprise.address" name="tel" maxlength="18" oninput="value=value.replace(/^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/,'')">
+                <template slot="prepend">
+                  <b style="color:red">*</b>地址:
+                </template>
+              </el-input>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div>
+              <el-input placeholder="请输入内容" v-model="Enterprise.legalPerson">
+                <template slot="prepend">
+                  <b style="color:red">*</b>法人:
+                </template>
+              </el-input>
+            </div>
+          </el-col>
+        </el-row> -->
+        <!-- 第9行 -->
+        <!-- <el-row :gutter="20">
+          <el-col :span="24">
+            <div>
+              <span class="bumen">
+                <b style="color:red">*</b>部门
+              </span>
+              <el-cascader
+                :options="deptTreeData"
+                :show-all-levels="false"
+                clearable
+                :props="props"
+                style="width: 91%;margin-left: -4px;"
+                @change="getdeptID"
+                v-model="Enterprise.deptId"
+              ></el-cascader>
+            </div>
+          </el-col>
+        </el-row> -->
+        <el-row :gutter="20">
+          <el-col :span="24">
+            <div class="grid-content bg-purple" style="padding-top:7px;">
+              &nbsp;&nbsp;
+              <b style="color:red">*</b>企业类型:
+              <el-radio-group v-model="Enterprise.corpType" style="margin-left:10%;">
+                <el-radio :label="0">普通企业</el-radio>
+                <el-radio :label="1">重点企业</el-radio>
+                <el-radio :label="2">纳税大户</el-radio>
+              </el-radio-group>
+            </div>
+          </el-col>
+        </el-row>
+
+        <!-- 第10行 -->
         <el-row :gutter="20">
           <el-col :span="24">
             <div class="grid-content">
@@ -363,15 +485,32 @@ export default {
       loading: false,
       formItemLayout,
       form: this.$form.createForm(this),
-      dict: {
+      Enterprise: {
         auditFalg:0,
         dataSource:2
       },
-      datajiedao:""
+      datajiedao:"",
+      options1:[],
+      options2:[],
+      options3:[],
+      options4:[],
     }
   },
-  mounted(){
-    this.getTree1();
+  // mounted(){
+  //   this.getTree1();
+  //   this.getyuanqu();
+  //   this.getzhuanyuan();
+  //   this.getjeidui();
+  // },
+  watch:{
+    dictAddVisiable(){
+      if(this.dictAddVisiable){
+         this.getTree1();
+          this.getyuanqu();
+          this.getzhuanyuan();
+          this.getjeidui();
+      }
+    }
   },
   methods: {
     reset () {
@@ -382,13 +521,42 @@ export default {
     //获取街道信息
     getTree1(){
         this.$get('adm/findByPid',{pid:'qwedsadasdsadsad'}).then(res=>{
-        console.log(res);
+        // console.log(res);
         // let data5=res.data[0];
         // console.log(data5)
-        this.datajiedao=res.data;
-        console.log(this.datajiedao);
+        this.options1=res.data.records;
+        // console.log(this.options1);
         // alert(123);
       })},
+      getyuanqu(){
+        this.$get('zone/listZone').then(res=>{
+        // console.log(res);
+        // let data5=res.data[0];
+        // console.log(data5)
+        this.options2=res.data.data;
+        // console.log(this.options2);
+        // alert(123);
+      })},
+      getzhuanyuan(){
+        this.$get('userInfoController/listUserByName',{type:3}).then(res=>{
+        // console.log(res);
+        // let data5=res.data[0];
+        // console.log(data5)
+        this.options3=res.data.data;
+        // console.log(this.options3);
+        // alert(123);
+      })
+      },
+      getjeidui(){
+        this.$get('userInfoController/listUserByName',{type:4}).then(res=>{
+        // console.log(res);
+        // let data5=res.data[0];
+        // console.log(data5)
+        this.options4=res.data.data;
+        // console.log(this.options4);
+        // alert(123);
+      })
+      },
     onClose (){
       // this.reset()
       this.$emit('close');
@@ -460,6 +628,27 @@ export default {
 }
 </script>
   <style>
+.bumen1 {
+  width: 134px;
+  height: 40px;
+  line-height: 40px;
+  background-color: #f5f7fa;
+  color: #909399;
+  vertical-align: middle;
+  display: inline-block;
+  position: relative;
+  border: 1px solid #dcdfe6;
+  border-right: 0;
+  border-radius: 4px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 0 20px;
+  white-space: nowrap;
+  margin-bottom: 2px;
+}
+.el-input-group__prepend {
+  width: 134px;
+}
 .el-row {
   margin-bottom: 20px;
 }
