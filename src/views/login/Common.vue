@@ -67,7 +67,7 @@ export default {
           }
           .logo {
             width: 40px;
-            height: 19px;
+            height: 30px;
             vertical-align: center;
             margin-right: 16px;
           }

@@ -73,7 +73,11 @@ export default {
   props: {
     dictAddVisiable: {
       default: false
-    }
+    },
+    // getTree1: {
+    //     type: Function,
+    //     default: null
+    //   }
   },
   data () {
     return {
@@ -170,11 +174,16 @@ export default {
           }).then(() => {
             this.reset()
             this.$emit('success')
+            // this.$parent.getTree1();
           }).catch(() => {
             this.loading = false
           })
         }
       })
+
+      //  if (this.getTree1) {
+      //     this.getTree1();
+      //   }
     }
   },
   watch: {

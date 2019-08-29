@@ -7,8 +7,8 @@ moment.locale('zh-cn')
 
 // 统一配置
 let FEBS_REQUEST = axios.create({
-  baseURL: 'http://192.168.0.126:8085/',
-  // baseURL: 'http://43.242.156.93:8085/',
+  // baseURL: 'http://192.168.0.126:8085/',
+  baseURL: 'http://43.242.156.93:8085/',
   // baseURL:this.$baseURL,
   responseType: 'json',
   validateStatus (status) {
